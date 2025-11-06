@@ -38,40 +38,6 @@ fun GastosListScreen(
         viewModel.loadGastos()
     }
 
-    if (showDeleteDialog) {
-        AlertDialog(
-            onDismissRequest = {
-                showDeleteDialog = false
-                gastoToDelete = null
-            },
-            title = { Text("Eliminar Gasto") },
-            text = { Text("¿Estás seguro de que quieres eliminar este gasto? Esta acción no se puede deshacer.") },
-            confirmButton = {
-                TextButton(
-                    onClick = {
-                        gastoToDelete?.let { gasto ->
-                            viewModel.deleteGasto(gasto.gastoId)
-                        }
-                        showDeleteDialog = false
-                        gastoToDelete = null
-                    }
-                ) {
-                    Text("Eliminar", color = Color.Red)
-                }
-            },
-            dismissButton = {
-                TextButton(
-                    onClick = {
-                        showDeleteDialog = false
-                        gastoToDelete = null
-                    }
-                ) {
-                    Text("Cancelar")
-                }
-            }
-        )
-    }
-
     Scaffold(
         containerColor = Pink40,
         topBar = {
@@ -79,7 +45,7 @@ fun GastosListScreen(
                 title = {
                     Text(
                         "Lista de Gastos",
-                        color = Color.White,
+                        color = Color.Black,
                         fontWeight = FontWeight.Bold
                     )
                 },
@@ -92,7 +58,7 @@ fun GastosListScreen(
             FloatingActionButton(
                 onClick = { navController.navigate(Screen.GastosScreen.route) },
                 containerColor = Color(0xFF0D47A1),
-                contentColor = Color.White
+                contentColor = Color.Black
             ) {
                 Icon(Icons.Default.Add, "Agregar Gasto")
             }
@@ -122,14 +88,14 @@ fun GastosListScreen(
                                 onClick = { viewModel.loadGastos() },
                                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF0D47A1))
                             ) {
-                                Text("Reintentar", color = Color.White)
+                                Text("Reintentar", color = Color.Red)
                             }
                         }
                     }
                 }
                 uiState.gastos.isEmpty() -> {
                     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                        Text("No hay gastos registrados", color = Color.White)
+                        Text("No hay gastos registrados", color = Color.Black)
                     }
                 }
                 else -> {
@@ -166,7 +132,7 @@ fun GastosListItem(
     Card(
         modifier = Modifier.fillMaxWidth(),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White)
+        colors = CardDefaults.cardColors(containerColor = Color.Black)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(
